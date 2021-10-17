@@ -1,0 +1,21 @@
+{% include 'header.html' %}
+<div class="content">
+	<p>Offset in X: <span id="x"></span></p>
+	<p>Offset in Y: <span id="y"></span></p>
+	<p>Offset in Z: <span id="z"></span></p>
+</div>
+	<script>
+const urlSearchParams = new URLSearchParams(window.location.search);
+const params = Object.fromEntries(urlSearchParams.entries());
+const interval = setInterval(function() {
+	fetch("/pull.json?body="+params.body +"&x="+params.x + "&y="+params.y + "&z=" +params.z)
+	    .then(data => data.json())
+	    .then(data => {
+		    document.getElementById("x").innerHTML = data.results[0].x;
+		    document.getElementById("y").innerHTML = data.results[0].y;
+		    document.getElementById("z").innerHTML = data.results[0].z;
+	    	});
+}, 300);
+
+	</script>
+{% include 'footer.html' %}
