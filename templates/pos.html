@@ -3,6 +3,8 @@
 	<p>Offset in X: <span id="x"></span></p>
 	<p>Offset in Y: <span id="y"></span></p>
 	<p>Offset in Z: <span id="z"></span></p>
+
+	<p><small>Current position: (<span id="cx"></span>, <span id="cy"></span>, <span id="cz"></span>)</small></p>
 </div>
 	<script>
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -11,9 +13,14 @@ const interval = setInterval(function() {
 	fetch("/pull.json?body="+params.body +"&x="+params.x + "&y="+params.y + "&z=" +params.z)
 	    .then(data => data.json())
 	    .then(data => {
-		    document.getElementById("x").innerHTML = data.results[0].x;
-		    document.getElementById("y").innerHTML = data.results[0].y;
-		    document.getElementById("z").innerHTML = data.results[0].z;
+		    datas = data;
+		    document.getElementById("x").innerHTML = data.offset_x;
+		    document.getElementById("y").innerHTML = data.offset_y;
+		    document.getElementById("z").innerHTML = data.offset_z;
+
+		    document.getElementById("cx").innerHTML = data.actual_x;
+		    document.getElementById("cy").innerHTML = data.actual_y;
+		    document.getElementById("cz").innerHTML = data.actual_z;
 	    	});
 }, 300);
 
